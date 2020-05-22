@@ -1353,7 +1353,7 @@ ApplicationWindow {
         id: persistentSettings
         fileName: {
             if(isTails && tailsUsePersistence)
-                return homePath + "/Persistent/Monero/monero-core.conf";
+                return homePath + "/Persistent/Bittube/bittube-core.conf";
             return "";
         }
 
@@ -2120,11 +2120,11 @@ ApplicationWindow {
     function getDefaultDaemonRpcPort(networkType) {
         switch (networkType) {
             case NetworkType.STAGENET:
-                return 38081;
+                return 25382;
             case NetworkType.TESTNET:
-                return 28081;
+                return 25282;
             default:
-                return 18081;
+                return 25182;
         }
     }
 
