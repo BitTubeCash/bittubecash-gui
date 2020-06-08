@@ -1,4 +1,4 @@
 [submodule "monero"]
 	path = monero
-	url = https://github.com/tubedev2000/bittube
+	url = https://github.com/BitTubeCash/bittube4
 	ignore = all
