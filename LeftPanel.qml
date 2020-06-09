@@ -237,7 +237,7 @@ Rectangle {
                         if (persistentSettings.fiatPriceEnabled && persistentSettings.fiatPriceToggle) {
                             return appWindow.fiatApiCurrencySymbol();
                         } else {
-                            return "XMR"
+                            return "TUBE"
                         }
                     }
                     color: MoneroComponents.Style.blackTheme ? "white" : "black"
@@ -496,7 +496,7 @@ Rectangle {
             }
 
             // ------------- Mining tab ---------------
-            MoneroComponents.MenuButton {
+            /*MoneroComponents.MenuButton {
                 id: miningButton
                 visible: !isAndroid && !isIOS && appWindow.walletMode >= 2
                 anchors.left: parent.left
@@ -516,7 +516,7 @@ Rectangle {
                 anchors.left: parent.left
                 anchors.right: parent.right
                 anchors.leftMargin: 20
-            }
+            }*/
 
             // ------------- TxKey tab ---------------
             MoneroComponents.MenuButton {
@@ -542,7 +542,7 @@ Rectangle {
             }
 
             // ------------- Shared RingDB tab ---------------
-            MoneroComponents.MenuButton {
+            /*MoneroComponents.MenuButton {
                 id: sharedringdbButton
                 visible: appWindow.walletMode >= 2
                 anchors.left: parent.left
@@ -562,7 +562,7 @@ Rectangle {
                 anchors.left: parent.left
                 anchors.right: parent.right
                 anchors.leftMargin: 20
-            }
+            }*/
 
             // ------------- Sign/verify tab ---------------
             MoneroComponents.MenuButton {

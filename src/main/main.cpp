@@ -218,9 +218,9 @@ int main(int argc, char *argv[])
     #endif
 
     if(isTails && TailsOS::usePersistence){
-        moneroAccountsDir = QDir::homePath() + "/Persistent/Bittube/wallets";
+        moneroAccountsDir = QDir::homePath() + "/Persistent/BittubeCash/wallets";
     } else if (!moneroAccountsRootDir.empty()) {
-        moneroAccountsDir = moneroAccountsRootDir.at(0) + "/Bittube/wallets";
+        moneroAccountsDir = moneroAccountsRootDir.at(0) + "/BittubeCash/wallets";
     } else {
         qCritical() << "Error: accounts root directory could not be set";
         return 1;
@@ -260,7 +260,7 @@ Verify update binary using 'shasum'-compatible (SHA256 algo) output signed by tw
 
     // Log settings
     const QString logPath = QDir::toNativeSeparators(getLogPath(parser.value(logPathOption)));
-    Monero::Wallet::init(argv[0], "monero-wallet-gui", logPath.toStdString().c_str(), true);
+    Monero::Wallet::init(argv[0], "bittubecash-wallet-gui", logPath.toStdString().c_str(), true);
     qInstallMessageHandler(messageHandler);
 
     // loglevel is configured in main.qml. Anything lower than

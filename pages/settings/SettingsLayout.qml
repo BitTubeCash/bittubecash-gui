@@ -196,7 +196,7 @@ Rectangle {
                 MoneroComponents.StandardDropdown {
                     id: fiatPriceCurrencyDropdown
                     Layout.fillWidth: true
-                    currentIndex: persistentSettings.fiatPriceCurrency === "xmrusd" ? 0 : 1
+                    currentIndex: persistentSettings.fiatPriceCurrency === "tubeusd" ? 0 : 1
                     dataModel: fiatPriceCurrencyModel
                     onChanged: {
                         var obj = dataModel.get(currentIndex);
@@ -256,11 +256,11 @@ Rectangle {
     ListModel {
         id: fiatPriceCurrencyModel
         ListElement {
-            data: "xmrusd"
+            data: "tubeusd"
             column1: "USD"
         }
         ListElement {
-            data: "xmreur"
+            data: "tubeeur"
             column1: "EUR"
         }
     }

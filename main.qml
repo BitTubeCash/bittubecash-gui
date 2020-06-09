@@ -49,7 +49,7 @@ import "version.js" as Version
 
 ApplicationWindow {
     id: appWindow
-    title: "Monero" + (walletName ? " - " + walletName : "")
+    title: "BitTubeCash" + (walletName ? " - " + walletName : "")
     minimumWidth: 750
     minimumHeight: 450
 
@@ -96,17 +96,9 @@ ApplicationWindow {
     property real fiatPriceXMREUR: 0
     property var fiatPriceAPIs: {
         return {
-            "kraken": {
-                "xmrusd": "https://api.kraken.com/0/public/Ticker?pair=XMRUSD",
-                "xmreur": "https://api.kraken.com/0/public/Ticker?pair=XMREUR"
-            },
             "coingecko": {
-                "xmrusd": "https://api.coingecko.com/api/v3/simple/price?ids=monero&vs_currencies=usd",
-                "xmreur": "https://api.coingecko.com/api/v3/simple/price?ids=monero&vs_currencies=eur"
-            },
-            "cryptocompare": {
-                "xmrusd": "https://min-api.cryptocompare.com/data/price?fsym=XMR&tsyms=USD",
-                "xmreur": "https://min-api.cryptocompare.com/data/price?fsym=XMR&tsyms=EUR",
+                "tubeusd": "https://api.coingecko.com/api/v3/simple/price?ids=bittube&vs_currencies=usd",
+                "tubeeur": "https://api.coingecko.com/api/v3/simple/price?ids=bittube&vs_currencies=eur"
             }
         }
     }
@@ -723,7 +715,7 @@ ApplicationWindow {
         // resume refresh
         currentWallet.startRefresh();
         informationPopup.title = qsTr("Daemon failed to start") + translationManager.emptyString;
-        informationPopup.text  = error + ".\n\n" + qsTr("Please check your wallet and daemon log for errors. You can also try to start %1 manually.").arg((isWindows)? "monerod.exe" : "monerod")
+        informationPopup.text  = error + ".\n\n" + qsTr("Please check your wallet and daemon log for errors. You can also try to start %1 manually.").arg((isWindows)? "bittubed.exe" : "bittubed")
         informationPopup.icon  = StandardIcon.Critical
         informationPopup.onCloseCallback = null
         informationPopup.open();
@@ -979,7 +971,7 @@ ApplicationWindow {
                     txid_text += ", "
                 txid_text += txid[i]
             }
-            informationPopup.text  = (viewOnly)? qsTr("Transaction saved to file: %1").arg(path) : qsTr("Monero sent successfully: %1 transaction(s) ").arg(txid.length) + txid_text + translationManager.emptyString
+            informationPopup.text  = (viewOnly)? qsTr("Transaction saved to file: %1").arg(path) : qsTr("TUBE sent successfully: %1 transaction(s) ").arg(txid.length) + txid_text + translationManager.emptyString
             informationPopup.icon  = StandardIcon.Information
             if (transactionDescription.length > 0) {
                 for (var i = 0; i < txid.length; ++i)
@@ -1159,29 +1151,13 @@ ApplicationWindow {
 
     function fiatApiParseTicker(url, resp, currency){
         // parse & validate incoming JSON
-        if(url.startsWith("https://api.kraken.com/0/")){
-            if(resp.hasOwnProperty("error") && resp.error.length > 0 || !resp.hasOwnProperty("result")){
-                appWindow.fiatApiError("Kraken API has error(s)");
-                return;
-            }
-
-            var key = currency === "xmreur" ? "XXMRZEUR" : "XXMRZUSD";
-            var ticker = resp.result[key]["o"];
-            return ticker;
-        } else if(url.startsWith("https://api.coingecko.com/api/v3/")){
-            var key = currency === "xmreur" ? "eur" : "usd";
-            if(!resp.hasOwnProperty("monero") || !resp["monero"].hasOwnProperty(key)){
+        if(url.startsWith("https://api.coingecko.com/api/v3/")){
+            var key = currency === "tubeeur" ? "eur" : "usd";
+            if(!resp.hasOwnProperty("bittube") || !resp["bittube"].hasOwnProperty(key)){
                 appWindow.fiatApiError("Coingecko API has error(s)");
                 return;
             }
-            return resp["monero"][key];
-        } else if(url.startsWith("https://min-api.cryptocompare.com/data/")){
-            var key = currency === "xmreur" ? "EUR" : "USD";
-            if(!resp.hasOwnProperty(key)){
-                appWindow.fiatApiError("cryptocompare API has error(s)");
-                return;
-            }
-            return resp[key];
+            return resp["bittube"][key];
         }
     }
 
@@ -1228,9 +1204,9 @@ ApplicationWindow {
             return;
         }
 
-        if(persistentSettings.fiatPriceCurrency === "xmrusd")
+        if(persistentSettings.fiatPriceCurrency === "tubeusd")
             appWindow.fiatPriceXMRUSD = ticker;
-        else if(persistentSettings.fiatPriceCurrency === "xmreur")
+        else if(persistentSettings.fiatPriceCurrency === "tubeeur")
             appWindow.fiatPriceXMREUR = ticker;
 
         appWindow.updateBalance();
@@ -1259,9 +1235,9 @@ ApplicationWindow {
 
     function fiatApiCurrencySymbol() {
         switch (persistentSettings.fiatPriceCurrency) {
-            case "xmrusd":
+            case "tubeusd":
                 return "USD";
-            case "xmreur":
+            case "tubeeur":
                 return "EUR";
             default:
                 console.error("unsupported currency", persistentSettings.fiatPriceCurrency);
@@ -1270,7 +1246,7 @@ ApplicationWindow {
     }
 
     function fiatApiConvertToFiat(amount) {
-        var ticker = persistentSettings.fiatPriceCurrency === "xmrusd" ? appWindow.fiatPriceXMRUSD : appWindow.fiatPriceXMREUR;
+        var ticker = persistentSettings.fiatPriceCurrency === "tubeusd" ? appWindow.fiatPriceXMRUSD : appWindow.fiatPriceXMREUR;
         if(ticker <= 0){
             console.log(fiatApiError("Invalid ticker value: " + ticker));
             return "?.??";
@@ -1398,8 +1374,8 @@ ApplicationWindow {
 
         property bool fiatPriceEnabled: false
         property bool fiatPriceToggle: false
-        property string fiatPriceProvider: "kraken"
-        property string fiatPriceCurrency: "xmrusd"
+        property string fiatPriceProvider: "coingecko"
+        property string fiatPriceCurrency: "tubeusd"
 
         Component.onCompleted: {
             MoneroComponents.Style.blackTheme = persistentSettings.blackTheme
