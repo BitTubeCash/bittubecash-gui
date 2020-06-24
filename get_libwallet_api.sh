@@ -1,5 +1,5 @@
 #!/bin/bash
-MONERO_URL=https://github.com/BitTubeCash/bittube4.git
+MONERO_URL=https://github.com/BitTubeCash/bittubecash.git
 MONERO_BRANCH=master
 
 pushd $(pwd)

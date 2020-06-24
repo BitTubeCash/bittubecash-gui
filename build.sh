@@ -65,7 +65,7 @@ source ./utils.sh
 pushd $(pwd)
 ROOT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 MONERO_DIR=monero
-MONEROD_EXEC=bittubed
+MONEROD_EXEC=bittubecashd
 
 MAKE='make'
 if [[ $platform == *bsd* ]]; then
@@ -95,7 +95,7 @@ fi
 if [ "$platform" == "darwin" ]; then
     BIN_PATH=$BIN_PATH/bittubecash-wallet-gui.app/Contents/MacOS/
 elif [ "$platform" == "mingw64" ] || [ "$platform" == "mingw32" ]; then
-    MONEROD_EXEC=bittubed.exe
+    MONEROD_EXEC=bittubecashd.exe
 fi
 
 # force version update
