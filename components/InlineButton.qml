@@ -43,7 +43,7 @@ Item {
     property string shadowPressedColor: "#B32D00"
     property string shadowReleasedColor: "#FF4304"
     property string pressedColor: "#FF4304"
-    property string releasedColor: "#FF6C3C"
+    property string releasedColor: "#00abff"
     property string icon: ""
     property string textColor: MoneroComponents.Style.inlineButtonTextColor
     property int fontSize: small ? 14 : 16

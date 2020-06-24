@@ -366,7 +366,7 @@ Rectangle{
                     Layout.fillWidth: true
                     fontSize: 15
                     labelFontSize: 14
-                    property string style: "<style type='text/css'>a {cursor:pointer;text-decoration: none; color: #FF6C3C}</style>"
+                    property string style: "<style type='text/css'>a {cursor:pointer;text-decoration: none; color: #00abff}</style>"
                     labelText: qsTr("Blockchain location") + style + " <a href='#'> (%1)</a>".arg(qsTr("Change")) + translationManager.emptyString
                     labelButtonText: qsTr("Reset") + translationManager.emptyString
                     labelButtonVisible: text

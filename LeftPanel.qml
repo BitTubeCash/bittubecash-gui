@@ -260,7 +260,7 @@ Rectangle {
                     id: balancePart1
                     themeTransition: false
                     anchors.left: parent.left
-                    anchors.leftMargin: 58
+                    anchors.leftMargin: 65
                     anchors.baseline: currencyLabel.baseline
                     color: MoneroComponents.Style.blackTheme ? "white" : "black"
                     text: {
