@@ -1,15 +1,18 @@
-# Monero GUI
+# BitTube GUI
 
 Copyright (c) 2014-2019, The Monero Project
 
 ## Development resources
 
-- Web: [getmonero.org](https://getmonero.org)
-- Mail: [dev@getmonero.org](mailto:dev@getmonero.org)
-- Github: [https://github.com/monero-project/monero-gui](https://github.com/monero-project/monero-gui)
-- IRC: [#monero-dev on Freenode](irc://chat.freenode.net/#monero-dev)
-- Translation platform (Weblate): [translate.getmonero.org](https://translate.getmonero.org)
-- UI Design: [Monero-GUI on Figma](https://www.figma.com/file/DplJ2DDQfIKiuRvolHX2hN/Monero-GUI)
+- Web: [bittube.app](https://bittube.app)
+- Mail: [dev@bittube.app](mailto:dev@bittube.app)
+- Github: [https://github.com/ipbc-dev/bittube-wallet-gui](https://github.com/ipbc-dev/bittube-wallet-gui)
+- IRC: [#bittube-dev on Freenode](irc://chat.freenode.net/#bittube-dev)
+- Translation platform (Weblate): [translate.bittube.app](https://translate.bittube.app)
+
+![continuous-integration/gh-actions/gui](https://github.com/BitTubeCash/bittubecash-gui/workflows/continuous-integration/gh-actions/gui/badge.svg)
+
+# Original Readme:
 
 ## Vulnerability response
 
