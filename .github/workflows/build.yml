@@ -3,18 +3,18 @@ name: continuous-integration/gh-actions/gui
 on: [push, pull_request]
 
 jobs:
-  build-macos:
-
-    runs-on: macOS-latest
-    
-    steps:
-    - uses: actions/checkout@v1
-    - name: update brew and install dependencies
-      run: brew update && brew install boost hidapi zmq libpgm miniupnpc ldns expat libunwind-headers protobuf qt5 libgcrypt
-    - name: build
-      run: export PATH=$PATH:/usr/local/opt/qt/bin && ./build.sh
-    - name: test qml
-      run: build/release/bin/monero-wallet-gui.app/Contents/MacOS/monero-wallet-gui --test-qml
+#  build-macos:
+#
+#    runs-on: macOS-latest
+#    
+#    steps:
+#    - uses: actions/checkout@v1
+#    - name: update brew and install dependencies
+#      run: brew update && brew install boost hidapi zmq libpgm miniupnpc ldns expat libunwind-headers protobuf qt5 libgcrypt
+#    - name: build
+#      run: export PATH=$PATH:/usr/local/opt/qt/bin && ./build.sh
+#    - name: test qml
+#      run: build/release/bin/monero-wallet-gui.app/Contents/MacOS/monero-wallet-gui --test-qml
 
   build-ubuntu:
  
@@ -40,18 +40,18 @@ jobs:
     - name: test qml
       run: xvfb-run -a build/release/bin/monero-wallet-gui --test-qml
 
-  build-windows:
-
-    runs-on: windows-latest
-
-    steps:
-    - uses: actions/checkout@v1
-    - uses: numworks/setup-msys2@v1
-    - name: update pacman
-      run: msys2do pacman -Syu --noconfirm
-    - name: install monero dependencies
-      run: msys2do pacman -S --noconfirm mingw-w64-x86_64-toolchain make mingw-w64-x86_64-cmake mingw-w64-x86_64-boost mingw-w64-x86_64-openssl mingw-w64-x86_64-zeromq mingw-w64-x86_64-libsodium mingw-w64-x86_64-hidapi mingw-w64-x86_64-protobuf-c mingw-w64-x86_64-libusb git mingw-w64-x86_64-qt5 mingw-w64-x86_64-libgcrypt
-    - name: build
-      run: msys2do ./build.sh release
-    - name: test qml
-      run: msys2do build/release/bin/monero-wallet-gui --test-qml
+#  build-windows:
+#
+#    runs-on: windows-latest
+#
+#    steps:
+#    - uses: actions/checkout@v1
+#    - uses: numworks/setup-msys2@v1
+#    - name: update pacman
+#      run: msys2do pacman -Syu --noconfirm
+#    - name: install monero dependencies
+#      run: msys2do pacman -S --noconfirm mingw-w64-x86_64-toolchain make mingw-w64-x86_64-cmake mingw-w64-x86_64-boost mingw-w64-x86_64-openssl mingw-w64-x86_64-zeromq mingw-w64-x86_64-libsodium mingw-w64-x86_64-hidapi mingw-w64-x86_64-protobuf-c mingw-w64-x86_64-libusb git mingw-w64-x86_64-qt5 mingw-w64-x86_64-libgcrypt
+#    - name: build
+#      run: msys2do ./build.sh release
+#    - name: test qml
+#      run: msys2do build/release/bin/monero-wallet-gui --test-qml
