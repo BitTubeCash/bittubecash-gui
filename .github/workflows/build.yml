@@ -38,7 +38,7 @@ jobs:
     - name: build
       run: ./build.sh
     - name: test qml
-      run: xvfb-run -a build/release/bin/monero-wallet-gui --test-qml
+      run: xvfb-run -a build/release/bin/bittubecash-wallet-gui --test-qml
 
 #  build-windows:
 #
