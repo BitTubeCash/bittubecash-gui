@@ -57,6 +57,7 @@ Rectangle {
 
     signal historyClicked()
     signal transferClicked()
+    signal transferWClicked()
     signal receiveClicked()
     signal txkeyClicked()
     signal sharedringdbClicked()
@@ -70,6 +71,7 @@ Rectangle {
         menuColumn.previousButton.checked = false
         if(pos === "History") menuColumn.previousButton = historyButton
         else if(pos === "Transfer") menuColumn.previousButton = transferButton
+        else if(pos === "TransferW") menuColumn.previousButton = transferWButton
         else if(pos === "Receive")  menuColumn.previousButton = receiveButton
         else if(pos === "AddressBook") menuColumn.previousButton = addressBookButton
         else if(pos === "Mining") menuColumn.previousButton = miningButton
@@ -403,6 +405,29 @@ Rectangle {
 
             MoneroComponents.MenuButtonDivider {
                 visible: transferButton.present
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.leftMargin: 20
+            }
+
+            // ------------- TransferW tab ---------------
+            
+            MoneroComponents.MenuButton {
+                id: transferWButton
+                anchors.left: parent.left
+                anchors.right: parent.right
+                text: qsTr("Send WTUBE") + translationManager.emptyString
+                symbol: qsTr("W") + translationManager.emptyString
+                under: transferButton
+                onClicked: {
+                    parent.previousButton.checked = false
+                    parent.previousButton = transferWButton
+                    panel.transferWClicked()
+                }
+            }
+
+            MoneroComponents.MenuButtonDivider {
+                visible: transferWButton.present
                 anchors.left: parent.left
                 anchors.right: parent.right
                 anchors.leftMargin: 20

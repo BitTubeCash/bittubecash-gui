@@ -44,6 +44,10 @@ function checkAddress(address, testnet) {
   return walletManager.addressValid(address, testnet)
 }
 
+function checkEthAddress(address) {
+  return (/^(0x){1}[0-9a-fA-F]{40}$/i.test(address));
+}
+
 function checkTxID(txid) {
     return check256(txid, 64)
 }

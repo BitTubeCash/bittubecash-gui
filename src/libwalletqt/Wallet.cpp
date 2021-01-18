@@ -472,6 +472,18 @@ PendingTransaction *Wallet::createTransaction(const QString &dst_addr, const QSt
     return result;
 }
 
+PendingTransaction *Wallet::createWTransaction(const QString &dst_addr,
+                                              quint64 amount, quint32 mixin_count,
+                                              PendingTransaction::Priority priority)
+{
+    std::set<uint32_t> subaddr_indices;
+    Monero::PendingTransaction * ptImpl = m_walletImpl->createWtubeTransaction(
+                dst_addr.toStdString(), amount, mixin_count,
+                static_cast<Monero::PendingTransaction::Priority>(priority), currentSubaddressAccount(), subaddr_indices);
+    PendingTransaction * result = new PendingTransaction(ptImpl,0);
+    return result;
+}
+
 void Wallet::createTransactionAsync(const QString &dst_addr, const QString &payment_id,
                                quint64 amount, quint32 mixin_count,
                                PendingTransaction::Priority priority)
@@ -479,6 +491,16 @@ void Wallet::createTransactionAsync(const QString &dst_addr, const QString &paym
     m_scheduler.run([this, dst_addr, payment_id, amount, mixin_count, priority] {
         PendingTransaction *tx = createTransaction(dst_addr, payment_id, amount, mixin_count, priority);
         emit transactionCreated(tx, dst_addr, payment_id, mixin_count);
+    });
+}
+
+void Wallet::createWTransactionAsync(const QString &dst_addr,
+                               quint64 amount, quint32 mixin_count,
+                               PendingTransaction::Priority priority)
+{
+    m_scheduler.run([this, dst_addr, amount, mixin_count, priority] {
+        PendingTransaction *tx = createWTransaction(dst_addr, amount, mixin_count, priority);
+        emit transactionCreated(tx, dst_addr, "" ,mixin_count);
     });
 }
 

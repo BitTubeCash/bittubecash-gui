@@ -219,8 +219,18 @@ public:
                                                        quint64 amount, quint32 mixin_count,
                                                        PendingTransaction::Priority priority);
 
+    //! creates transaction
+    Q_INVOKABLE PendingTransaction * createWTransaction(const QString &dst_addr,
+                                                       quint64 amount, quint32 mixin_count,
+                                                       PendingTransaction::Priority priority);
+
     //! creates async transaction
     Q_INVOKABLE void createTransactionAsync(const QString &dst_addr, const QString &payment_id,
+                                            quint64 amount, quint32 mixin_count,
+                                            PendingTransaction::Priority priority);
+
+    //! creates async transaction
+    Q_INVOKABLE void createWTransactionAsync(const QString &dst_addr,
                                             quint64 amount, quint32 mixin_count,
                                             PendingTransaction::Priority priority);
 

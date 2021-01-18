@@ -51,6 +51,7 @@ Rectangle {
     property alias flickable: mainFlickable
 
     property Transfer transferView: Transfer { }
+    property TransferW transferWView: TransferW { }
     property Receive receiveView: Receive { }
     property Merchant merchantView: Merchant { }
     property TxKey txkeyView: TxKey { }
@@ -64,6 +65,7 @@ Rectangle {
     property Account accountView: Account { }
 
     signal paymentClicked(string address, string paymentId, string amount, int mixinCount, int priority, string description)
+    signal paymentWClicked(string address, string amount, int mixinCount, int priority, string description)
     signal sweepUnmixableClicked()
     signal generatePaymentIdInvoked()
     signal getProofClicked(string txid, string address, string message);
@@ -125,6 +127,10 @@ Rectangle {
                 name: "Transfer"
                 PropertyChanges { target: root; currentView: transferView }
                 PropertyChanges { target: mainFlickable; contentHeight: transferView.transferHeight1 + transferView.transferHeight2 + 80 }
+            }, State {
+                name: "TransferW"
+                PropertyChanges { target: root; currentView: transferWView }
+                PropertyChanges { target: mainFlickable; contentHeight: transferWView.transferHeight1 + 80 }
             }, State {
                 name: "Receive"
                 PropertyChanges { target: root; currentView: receiveView }
@@ -272,6 +278,14 @@ Rectangle {
         onSweepUnmixableClicked : {
             console.log("MiddlePanel: sweepUnmixableClicked")
             sweepUnmixableClicked()
+        }
+    }
+    Connections {
+        ignoreUnknownSignals: false
+        target: transferWView
+        onPaymentWClicked : {
+            console.log("MiddlePanel: paymentWClicked")
+            paymentWClicked(address, amount, mixinCount, priority, description)
         }
     }
 }

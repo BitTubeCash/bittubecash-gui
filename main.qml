@@ -127,6 +127,7 @@ ApplicationWindow {
         }
 
         if(seq === "Ctrl+S") middlePanel.state = "Transfer"
+        else if(seq === "Ctrl+W") middlePanel.state = "TransferW"
         else if(seq === "Ctrl+R") middlePanel.state = "Receive"
         else if(seq === "Ctrl+K") middlePanel.state = "TxKey"
         else if(seq === "Ctrl+H") middlePanel.state = "History"
@@ -288,6 +289,7 @@ ApplicationWindow {
         currentWallet.walletPassphraseNeeded.disconnect(onWalletPassphraseNeededWallet);
         currentWallet.transactionCommitted.disconnect(onTransactionCommitted);
         middlePanel.paymentClicked.disconnect(handlePayment);
+        middlePanel.paymentWClicked.disconnect(handleWPayment);
         middlePanel.sweepUnmixableClicked.disconnect(handleSweepUnmixable);
         middlePanel.getProofClicked.disconnect(handleGetProof);
         middlePanel.checkProofClicked.disconnect(handleCheckProof);
@@ -356,6 +358,7 @@ ApplicationWindow {
         currentWallet.walletPassphraseNeeded.connect(onWalletPassphraseNeededWallet);
         currentWallet.transactionCommitted.connect(onTransactionCommitted);
         middlePanel.paymentClicked.connect(handlePayment);
+        middlePanel.paymentWClicked.connect(handleWPayment);
         middlePanel.sweepUnmixableClicked.connect(handleSweepUnmixable);
         middlePanel.getProofClicked.connect(handleGetProof);
         middlePanel.checkProofClicked.connect(handleCheckProof);
@@ -877,6 +880,53 @@ ApplicationWindow {
             currentWallet.createTransactionAllAsync(address, paymentId, mixinCount, priority);
         else
             currentWallet.createTransactionAsync(address, paymentId, amountxmr, mixinCount, priority);
+    }
+
+    // called on "transferW"
+    function handleWPayment(address, amount, mixinCount, priority, description, createFile) {
+        console.log("Creating transaction: ")
+        console.log("\taddress: ", address,
+                    ", amount: ", amount,
+                    ", mixins: ", mixinCount,
+                    ", priority: ", priority,
+                    ", description: ", description);
+
+        var splashMsg = qsTr("Creating transaction...");
+        splashMsg += appWindow.currentWallet.isLedger() ? qsTr("\n\nPlease check your hardware wallet –\nyour input may be required.") : "";
+        showProcessingSplash(splashMsg);
+
+        transactionDescription = description;
+
+        // validate amount;
+        var amountxmr = walletManager.amountFromString(amount);
+        console.log("integer amount: ", amountxmr);
+        console.log("integer unlocked", currentWallet.unlockedBalance())
+        if (amountxmr <= 0) {
+            hideProcessingSplash()
+            informationPopup.title = qsTr("Error") + translationManager.emptyString;
+            informationPopup.text  = qsTr("Amount is wrong: expected number from %1 to %2")
+                    .arg(walletManager.displayAmount(0))
+                    .arg(walletManager.displayAmount(currentWallet.unlockedBalance()))
+                    + translationManager.emptyString
+
+            informationPopup.icon  = StandardIcon.Critical
+            informationPopup.onCloseCallback = null
+            informationPopup.open()
+            return;
+        } else if (amountxmr > currentWallet.unlockedBalance()) {
+            hideProcessingSplash()
+            informationPopup.title = qsTr("Error") + translationManager.emptyString;
+            informationPopup.text  = qsTr("Insufficient funds. Unlocked balance: %1")
+                    .arg(walletManager.displayAmount(currentWallet.unlockedBalance()))
+                    + translationManager.emptyString
+
+            informationPopup.icon  = StandardIcon.Critical
+            informationPopup.onCloseCallback = null
+            informationPopup.open()
+            return;
+        }
+
+        currentWallet.createWTransactionAsync(address, amountxmr, mixinCount, priority);
     }
 
     //Choose where to save transaction
@@ -1612,6 +1662,12 @@ ApplicationWindow {
 
                 onTransferClicked: {
                     middlePanel.state = "Transfer";
+                    middlePanel.flickable.contentY = 0;
+                    updateBalance();
+                }
+
+                onTransferWClicked: {
+                    middlePanel.state = "TransferW";
                     middlePanel.flickable.contentY = 0;
                     updateBalance();
                 }

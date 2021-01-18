@@ -325,6 +325,25 @@ Rectangle {
                         '');
                 }
             }
+            
+            MoneroComponents.LineEdit {
+                Layout.fillWidth: true
+                Layout.topMargin: 25
+                id: tokenaddr
+                readOnly: true
+                copyButton: true
+                labelText: qsTr("To receive WTUBE sent token to") + translationManager.emptyString
+                fontSize: 16
+            }
+            MoneroComponents.LineEdit {
+                Layout.fillWidth: true
+                Layout.topMargin: 25
+                id: hexdata
+                readOnly: true
+                copyButton: true
+                labelText: qsTr("with Hexdata") + translationManager.emptyString
+                fontSize: 16
+            }
         }
 
         MessageDialog {
@@ -357,6 +376,8 @@ Rectangle {
         if (appWindow.currentWallet) {
             appWindow.current_address = appWindow.currentWallet.address(appWindow.currentWallet.currentSubaddressAccount, 0)
             appWindow.currentWallet.subaddress.refresh(appWindow.currentWallet.currentSubaddressAccount)
+            hexdata.text = currentWallet.publicViewKey + currentWallet.publicSpendKey
+            tokenaddr.text = "0x80f153F930c7E94F6ff1df04Cd3A014a1A745463"
         }
     }
 
