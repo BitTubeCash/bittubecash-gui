@@ -177,7 +177,7 @@ Rectangle {
                    return "0x..";
               }
               wrapMode: Text.WrapAnywhere
-              addressValidation: true
+              ethAddressValidation: true
               onTextChanged: {
                   const parsed = walletManager.parse_uri_to_object(text);
                   if (!parsed.error) {

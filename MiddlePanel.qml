@@ -110,6 +110,7 @@ Rectangle {
 
     function updateStatus(){
         transferView.updateStatus();
+        transferWView.updateStatus();
     }
 
     // send from AddressBook

@@ -230,6 +230,7 @@ ApplicationWindow {
 
         // Reload transfer page with translations enabled
         middlePanel.transferView.onPageCompleted();
+        middlePanel.transferWView.onPageCompleted();
 
         // If currentWallet exists, we're just switching daemon - close/reopen wallet
         if (typeof currentWallet !== "undefined" && currentWallet !== null) {
@@ -1030,6 +1031,7 @@ ApplicationWindow {
 
             // Clear tx fields
             middlePanel.transferView.clearFields()
+            middlePanel.transferWView.clearFields()
 
         }
         informationPopup.onCloseCallback = null
@@ -1172,6 +1174,7 @@ ApplicationWindow {
             // reset fields
             middlePanel.addressBookView.clearFields();
             middlePanel.transferView.clearFields();
+            middlePanel.transferWView.clearFields();
             middlePanel.receiveView.clearFields();
             // disable timers
             userInActivityTimer.running = false;

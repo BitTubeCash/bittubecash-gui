@@ -40,6 +40,7 @@ TextArea {
     property bool mouseSelection: true
     property bool error: false
     property bool addressValidation: false
+    property bool ethAddressValidation: false
 
     id: textArea
     font.family: MoneroComponents.Style.fontRegular.name
@@ -63,6 +64,18 @@ TextArea {
             }
             textArea.text = textArea.text.replace(/[^a-z0-9.@\-]/gi,'');
             var address_ok = TxUtils.checkAddress(textArea.text, appWindow.persistentSettings.nettype) || TxUtils.isValidOpenAliasAddress(textArea.text);
+            if(!address_ok) error = true;
+            else error = false;
+            TextArea.cursorPosition = textArea.text.length;
+        }
+        if(ethAddressValidation){
+            // js replacement for `RegExpValidator { regExp: /[0-9A-Fa-f]{95}/g }`
+            if (textArea.text.startsWith("monero:")) {
+                error = false;
+                return;
+            }
+            textArea.text = textArea.text.replace(/[^a-z0-9.@\-]/gi,'');
+            var address_ok = TxUtils.checkEthAddress(textArea.text, appWindow.persistentSettings.nettype) || TxUtils.isValidOpenAliasAddress(textArea.text);
             if(!address_ok) error = true;
             else error = false;
             TextArea.cursorPosition = textArea.text.length;

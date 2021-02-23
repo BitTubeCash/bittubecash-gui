@@ -83,6 +83,7 @@ ColumnLayout {
     property bool showingHeader: labelText != "" || copyButton || pasteButton
     property var wrapMode: Text.NoWrap
     property alias addressValidation: input.addressValidation
+    property alias ethAddressValidation: input.ethAddressValidation
     property string backgroundColor: "" // mock
 
     property alias inlineButton: inlineButtonId
@@ -159,6 +160,7 @@ ColumnLayout {
         id: input
         readOnly: false
         addressValidation: false
+        ethAddressValidation: false
         Layout.fillWidth: true
         
         leftPadding: item.inputPaddingLeft
